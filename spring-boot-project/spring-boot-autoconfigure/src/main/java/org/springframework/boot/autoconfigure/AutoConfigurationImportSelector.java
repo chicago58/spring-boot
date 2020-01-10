@@ -91,9 +91,12 @@ public class AutoConfigurationImportSelector implements DeferredImportSelector, 
 		AutoConfigurationMetadata autoConfigurationMetadata = AutoConfigurationMetadataLoader
 				.loadMetadata(this.beanClassLoader);
 		AnnotationAttributes attributes = getAttributes(annotationMetadata);
-		List<String> configurations = getCandidateConfigurations(annotationMetadata, attributes);
+		List<String> configurations = getCandidateConfigurations(annotationMetadata, attributes); /*
+		获取所有可能参与到项目的候选配置 Bean. 读取 SpringBoot项目 classpath下 META-INF/spring.factories 文件，
+		该文件通常以 K/V形式存储项目包外需要注册的 Bean. 该方法获取需要自动配置的类，除去需要排除的配置类，
+		其他类将会注册到 SpringBoot项目的 Spring容器中 */
 		configurations = removeDuplicates(configurations);
-		Set<String> exclusions = getExclusions(annotationMetadata, attributes);
+		Set<String> exclusions = getExclusions(annotationMetadata, attributes); /* 获取所有不需要加载的配置 Bean */
 		checkExcludedClasses(configurations, exclusions);
 		configurations.removeAll(exclusions);
 		configurations = filter(configurations, autoConfigurationMetadata);
@@ -146,6 +149,7 @@ public class AutoConfigurationImportSelector implements DeferredImportSelector, 
 	 * @return a list of candidate configurations
 	 */
 	protected List<String> getCandidateConfigurations(AnnotationMetadata metadata, AnnotationAttributes attributes) {
+		/* 该方法获取想要加载的类，而如何获取这些类是通过 SpringFactoriesLoader 去加载对应的 spring.factories. */
 		List<String> configurations = SpringFactoriesLoader.loadFactoryNames(getSpringFactoriesLoaderFactoryClass(),
 				getBeanClassLoader());
 		Assert.notEmpty(configurations, "No auto configuration classes found in META-INF/spring.factories. If you "

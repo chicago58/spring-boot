@@ -50,7 +50,10 @@ import org.springframework.core.annotation.AliasFor;
 @SpringBootConfiguration
 @EnableAutoConfiguration
 @ComponentScan(excludeFilters = { @Filter(type = FilterType.CUSTOM, classes = TypeExcludeFilter.class),
-		@Filter(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class) })
+		@Filter(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class) }) /*
+		@ComponentScan 注解的作用是扫描 @SpringBootApplication 所在的 Application 类（SpringBoot项目入口类）所在包下
+		所有的 @Component 注解（或扩展注解）标记的 bean，并注册到 Spring 容器中。
+		 那么问题是 pom 文件中依赖的 Bean 是如何注册到 SpringBoot 项目的 Spring 容器中的呢？*/
 public @interface SpringBootApplication {
 
 	/**
