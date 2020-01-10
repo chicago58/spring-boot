@@ -47,14 +47,14 @@ import org.springframework.core.annotation.AliasFor;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-@SpringBootConfiguration
-@EnableAutoConfiguration
+@SpringBootConfiguration /* 表明是 Spring的配置类，包含的 @Configuration、@Component 说明 Spring的配置类也是 Spring的一个组件 */
+@EnableAutoConfiguration /* 表明开启自动装配，并将自动配置类注册到 Spring容器中 */
 @ComponentScan(excludeFilters = { @Filter(type = FilterType.CUSTOM, classes = TypeExcludeFilter.class),
 		@Filter(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class) }) /*
-		@ComponentScan 注解的作用是扫描 @SpringBootApplication 所在的 Application 类（SpringBoot项目入口类）所在包下
-		所有的 @Component 注解（或扩展注解）标记的 bean，并注册到 Spring 容器中。
-		 那么问题是 pom 文件中依赖的 Bean 是如何注册到 SpringBoot 项目的 Spring 容器中的呢？*/
-public @interface SpringBootApplication {
+		@ComponentScan 作用是扫描 @SpringBootApplication 所在的 Application 类（SpringBoot项目入口类）所在包下所有的 @Component
+		（或扩展注解）标记的 Bean，并注册到 Spring 容器中。那么问题是 pom文件中依赖的 Bean是如何注册到 SpringBoot项目的 Spring容器中的呢？*/
+public @interface SpringBootApplication { /* @SpringBootApplication 标注在类上，说明这个类是 SpringBoot项目的主配置类，
+												SpringBoot运行该类的 main方法启动项目 */
 
 	/**
 	 * Exclude specific auto-configuration classes such that they will never be applied.

@@ -120,7 +120,8 @@ public abstract class AutoConfigurationPackages {
 
 		@Override
 		public void registerBeanDefinitions(AnnotationMetadata metadata, BeanDefinitionRegistry registry) {
-			register(registry, new PackageImport(metadata).getPackageName());
+			register(registry, new PackageImport(metadata).getPackageName()); /* 通过该方法获取扫描的包路径，
+																				将主配置类所在包及子包中所有组件扫描到 Spring容器 */
 		}
 
 		@Override
