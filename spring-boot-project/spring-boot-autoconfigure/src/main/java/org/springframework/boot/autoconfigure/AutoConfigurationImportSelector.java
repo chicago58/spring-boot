@@ -149,8 +149,10 @@ public class AutoConfigurationImportSelector implements DeferredImportSelector, 
 	 * @return a list of candidate configurations
 	 */
 	protected List<String> getCandidateConfigurations(AnnotationMetadata metadata, AnnotationAttributes attributes) {
-		/* 该方法获取需要加载的类，而如何获取这些类是通过 SpringFactoriesLoader从 spring.factories中获取资源，然后通过 Properties加载资源
-		* 所以，在项目启动时从类路径下的 META-INF/spring.factories中获取 EnableAutoConfiguration指定的值，作为自动配置类导入到 Spring容器 */
+		/* 该方法获取需要加载的类，而如何获取这些类是通过 SpringFactoriesLoader从 spring.factories中获取资源，即根据 @EnableAutoConfiguration
+		的完整类名 org.springframework.boot.autoconfigure.EnableAutoConfiguration作为查找的 key获取一组 @Configuration类，然后
+		通过 Properties加载资源。所以，在项目启动时从类路径下的 META-INF/spring.factories中获取 EnableAutoConfiguration指定的值，
+		作为自动配置类导入到 Spring容器 */
 		List<String> configurations = SpringFactoriesLoader.loadFactoryNames(getSpringFactoriesLoaderFactoryClass(),
 				getBeanClassLoader());
 		Assert.notEmpty(configurations, "No auto configuration classes found in META-INF/spring.factories. If you "

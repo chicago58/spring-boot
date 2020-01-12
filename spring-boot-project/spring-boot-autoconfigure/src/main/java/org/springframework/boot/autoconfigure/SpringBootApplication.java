@@ -48,7 +48,7 @@ import org.springframework.core.annotation.AliasFor;
 @Documented
 @Inherited
 @SpringBootConfiguration /* 表明是 Spring的配置类，包含的 @Configuration、@Component 说明 Spring的配置类也是 Spring的一个组件 */
-@EnableAutoConfiguration /* 表明开启自动装配，并将自动配置类注册到 Spring容器中 */
+@EnableAutoConfiguration /* 表明开启自动装配，并将所有符合条件的 Bean配置注册到 Spring容器中（@EnableXXX 是开启某一项功能的注解） */
 @ComponentScan(excludeFilters = { @Filter(type = FilterType.CUSTOM, classes = TypeExcludeFilter.class),
 		@Filter(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class) }) /*
 		@ComponentScan 作用是扫描 @SpringBootApplication 所在的 Application 类（SpringBoot项目入口类）所在包下所有的 @Component
