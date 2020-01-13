@@ -47,13 +47,17 @@ import org.springframework.core.annotation.AliasFor;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-@SpringBootConfiguration /* 表示注释的类是 Spring的配置类，其中包含的 @Configuration、@Component 说明 Spring配置类也是 Spring组件 */
-@EnableAutoConfiguration /* 表示开启自动装配，并将所有符合条件的 Bean注册到 Spring容器（@EnableXXX 表示开启某项功能的注解） */
+@SpringBootConfiguration /* @SpringBootConfiguration 标注的类是 Spring配置类，其中包含 @Configuration、@Component表示
+Spring配置类也是 Spring组件；@SpringBootConfiguration 会将当前类中声明的以 @Bean标记的方法实例纳入 Spring容器中，且方法名就是实例名 */
+@EnableAutoConfiguration /* @EnableAutoConfiguration 开启自动装配，并将所有符合条件的 @Configuration配置注册到
+Spring容器中（@EnableXXX 是开启某项功能的注解） */
 @ComponentScan(excludeFilters = { @Filter(type = FilterType.CUSTOM, classes = TypeExcludeFilter.class),
-		@Filter(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class) }) /*
-		@ComponentScan 作用是扫描 @SpringBootApplication 所在的 Application 类（SpringBoot项目入口类）所在包下所有 @Component
-		（或扩展注解）标记的 Bean，并注册到 Spring 容器。那么问题是 pom文件依赖的 Bean是如何注册到 Spring容器中的呢？*/
-public @interface SpringBootApplication { /* @SpringBootApplication 标注在类上，说明这个类是 SpringBoot项目的主配置类，
+		@Filter(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class) }) /* @ComponentScan 注解用于自动
+		扫描指定包下的所有组件，通过属性值来指定扫描规则。默认扫描当前类所在包下的所有配置类，并装配标识了 @Controller、@Service、@Repository、
+		@Component 注解的类到 Spring容器中。简言之，@ComponentScan 定义扫描路径并从中找出标识了需要装配的类自动装配到 Spring的 Bean容器中。
+		换言之，@ComponentScan的作用是扫描 @SpringBootApplication所在的 Application类（SpringBoot项目入口类）所在包下所有 @Component
+		（或扩展注解）标记的 Bean，并将它们注册到 Spring容器中。那么问题是 pom文件依赖的 Bean如何注册到 Spring容器中呢？*/
+public @interface SpringBootApplication { /* @SpringBootApplication 标注在类上，表示当前类是 SpringBoot项目的主配置类，
 												SpringBoot运行该类的 main方法启动项目 */
 
 	/**
